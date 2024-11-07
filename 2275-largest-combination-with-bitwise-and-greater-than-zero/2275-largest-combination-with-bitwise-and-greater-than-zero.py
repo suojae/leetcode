@@ -3,7 +3,6 @@ from typing import List
 
 class Solution:
     def largestCombination(self, candidates: List[int]) -> int:
-        candidates_count = len(candidates)
         max_count = 0
 
         for i in range(24, -1, -1):  
