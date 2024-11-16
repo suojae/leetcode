@@ -1,20 +1,16 @@
 class Solution:
-    def resultsArray(self, nums, k):
-        if k == 1:
-            return nums  # If k is 1, every single element is a valid subarray
-
-        length = len(nums)
-        result = [-1] * (length - k + 1)
-        consecutive_count = 1  # Count of consecutive elements
-
-        for index in range(length - 1):
-            if nums[index] + 1 == nums[index + 1]:
-                consecutive_count += 1
+    def resultsArray(self, nums: List[int], k: int) -> List[int]:
+        ans_arr = []
+        
+        for start in range(len(nums) - k + 1):  
+            tmp_arr = nums[start:start + k]     
+            
+            if all(tmp_arr[i] + 1 == tmp_arr[i + 1] for i in range(len(tmp_arr) - 1)):
+                ans_arr.append(max(tmp_arr))  # 연속적이면 최댓값 추가
             else:
-                consecutive_count = 1  # Reset count if not consecutive
+                ans_arr.append(-1)           # 연속적이지 않으면 -1 추가
+                
+        return ans_arr
 
-            # If we have enough consecutive elements, update the result
-            if consecutive_count >= k:
-                result[index - k + 2] = nums[index + 1]
 
-        return result
+
