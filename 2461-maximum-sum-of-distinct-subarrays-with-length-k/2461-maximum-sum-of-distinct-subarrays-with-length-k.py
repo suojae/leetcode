@@ -1,25 +1,29 @@
 class Solution:
     def maximumSubarraySum(self, nums: List[int], k: int) -> int:
         n = len(nums)
-        mp = defaultdict(int)
-        ws = 0
+        elements = set()
+        current_sum = 0
         max_sum = 0
+        begin = 0
 
-        for i in range(n):
-            # Add the current element to the window
-            mp[nums[i]] += 1
-            ws += nums[i]
+        for end in range(n): 
+            if nums[end] not in elements:
+                current_sum += nums[end]
+                elements.add(nums[end])
 
-            # If the window size exceeds 'k', slide the window
-            if i >= k:
-                le = nums[i - k]
-                mp[le] -= 1
-                ws -= le
-                if mp[le] == 0:
-                    del mp[le]
-
-            # Check if the window has exactly 'k' distinct elements
-            if i >= k - 1 and len(mp) == k:
-                max_sum = max(max_sum, ws)
+                if end - begin + 1 == k:
+                    if current_sum > max_sum:
+                        max_sum = current_sum
+                    
+                    current_sum -= nums[begin]
+                    elements.remove(nums[begin])
+                    begin += 1
+            else:
+                while nums[begin] != nums[end]:
+                    current_sum -= nums[begin]
+                    elements.remove(nums[begin])
+                    begin += 1
+                
+                begin += 1
 
         return max_sum
