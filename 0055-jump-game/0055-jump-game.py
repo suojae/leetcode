@@ -8,6 +8,3 @@ class Solution:
             if max_reachable >= len(nums) - 1:  # 마지막 인덱스에 도달 가능하면 True
                 return True
         return False
-
-
-        
