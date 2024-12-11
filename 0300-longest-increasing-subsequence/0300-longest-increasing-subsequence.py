@@ -1,20 +1,15 @@
+from bisect import bisect_left
+from typing import List
+
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        res = [] 
-
-        for num in nums:
-            if not res or num > res[-1]: 
-                res.append(num)
-            else:
-                left = 0
-                right = len(res) - 1
-                while left <= right:
-                    mid = (left + right) // 2
-                    if res[mid] < num:
-                        left = mid + 1
-                    else:
-                        right = mid - 1
-                
-                res[left] = num
+        sub = []  # 증가하는 부분 수열을 저장
         
-        return len(res)
+        for num in nums:
+            pos = bisect_left(sub, num)  # 현재 숫자가 들어갈 위치 탐색
+            if pos == len(sub):
+                sub.append(num)  # 새 숫자를 추가
+            else:
+                sub[pos] = num  # 기존 숫자를 대체하여 최소화
+            
+        return len(sub)  # 최장 증가 부분 수열의 길이 반환
