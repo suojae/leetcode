@@ -3,17 +3,16 @@ from typing import List
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         if not board or not board[0]:
-            return  # 빈 보드는 처리할 필요가 없음
+            return 
         
         rows, cols = len(board), len(board[0])
         dx = [1, 0, -1, 0]
         dy = [0, 1, 0, -1]
 
-        # DFS 함수 정의
         def dfs(x, y):
             if x < 0 or x >= rows or y < 0 or y >= cols or board[x][y] != 'O':
                 return
-            board[x][y] = 'T'  # 'O'를 'T'로 바꿔서 방문 처리
+            board[x][y] = 'V'  # 'O'를 'T'로 바꿔서 방문 처리
             for i in range(4):  # 상하좌우 탐색
                 dfs(x + dx[i], y + dy[i])
 
@@ -33,5 +32,5 @@ class Solution:
             for j in range(cols):
                 if board[i][j] == 'O':
                     board[i][j] = 'X'  # 둘러싸인 'O'를 'X'로 변환
-                elif board[i][j] == 'T':
+                elif board[i][j] == 'V':
                     board[i][j] = 'O'  # 방문했던 'T'를 'O'로 복원
