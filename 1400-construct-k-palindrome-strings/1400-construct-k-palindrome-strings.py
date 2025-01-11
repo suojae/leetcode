@@ -1,13 +1,15 @@
 class Solution:
     def canConstruct(self, s: str, k: int) -> bool:
-        freq_map = {}
-        single_count = 0
+        # Handle edge cases
+        if len(s) < k:
+            return False
+        if len(s) == k:
+            return True
+        # Initialize oddCount as an integer bitmask
+        odd_count = 0
 
-        for c in s:
-            freq_map[c] = freq_map.get(c, 0) + 1
-
-        for freq in freq_map.values():
-            if freq % 2 == 1:
-                single_count += 1
-
-        return single_count <= k and k <= len(s)
+        # Update the bitmask for each character in the string
+        for chr in s:
+            odd_count ^= 1 << (ord(chr) - ord("a"))
+        # Return if the number of odd frequencies is less than or equal to
+        return bin(odd_count).count("1") <= k
