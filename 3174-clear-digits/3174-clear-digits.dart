@@ -1,6 +1,17 @@
 class Solution {
-  String clearDigits(String s) => s.split('').fold('', (acc, ch) =>
-      int.tryParse(ch) != null ? acc.substring(0, acc.length - 1) : acc + ch
-    );
-  
+  String clearDigits(String s) {
+    List<String> stack = [];
+
+    for (var i in s.split('')) {
+      if (int.tryParse(i) != null) {
+        if (stack.isNotEmpty) {
+          stack.removeLast(); 
+        }
+      } else {
+        stack.add(i); 
+      }
+    }
+
+    return stack.join();
+  }
 }
